@@ -1,28 +1,6 @@
 const baseURL = 'https://api.github.com';
-const user = 'yukijina';
-const token = 'b1d89895c5cb39e90445bd1bdd9b395697bdf522';
-// const postData = {
-//   body: 'Great stuff'
-// };
-//
-// fetch('https://api.github.com/user/repos', {
-//   headers: {
-//     Authorization: `token ${token}`
-//   }
-// })
-//   .then(res => res.json())
-//   .then(json => console.log(json));
-//
-// fetch(
-//   'https://api.github.com/repos/yukijina/rails-todomvc-code-along/commits/9de1b3ec53444f5b4bcb8db24a88f60c982d1c57/comments',
-//   {
-//     method: 'POST',
-//     body: JSON.stringify(postData),
-//     headers: {
-//       Authorization: `token ${token}`
-//     }
-//   }
-// ).then(res => console.log(res));
+const user = 'YOUR REPO NAME';
+const token = 'YOUR TOKEN';
 
 function getToken() {
   //change to your token to run in browser, but set
