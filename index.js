@@ -1,5 +1,7 @@
 const baseURL = 'https://api.github.com';
-const user = '<YOUR_USERNAME>';
+const user = 'YOUR REPO NAME';
+const token = 'YOUR TOKEN';
+
 
 function getToken() {
   //change to your token to run in browser, but set
@@ -10,16 +12,76 @@ function getToken() {
 function forkRepo() {
   const repo = 'learn-co-curriculum/js-ajax-fetch-lab';
   //use fetch to fork it!
+  fetch(
+    `${baseURL}/repos/${repo}/forks`,
+    {
+      method: 'POST',
+      //body: JSON.stringify(showResults),
+      headers: {
+        Authorization: `token ${getToken()}`
+        //Authorization: `token ${token}`
+      }
+    }
+  ).then(res => res.json())
+   .then(json => showResults(json))
 }
 
 function showResults(json) {
   //use this function to display the results from forking via the API
+  const p = document.createElement('p')
+  p.innerText = `HTML URL: ${json.html_url}`
+  document.getElementById('results').append(p)
 }
 
 function createIssue() {
   //use this function to create an issue based on the values input in index.html
+  const repo = 'js-ajax-fetch-lab';
+
+  const postData = {
+    title: document.getElementById('title').value,
+    body: document.getElementById('body').value,
+  };
+
+  fetch(
+    `${baseURL}/repos/${user}/${repo}/issues`,
+    {
+      method: 'POST',
+      body: JSON.stringify(postData),
+      headers: {
+        Authorization: `token ${getToken()}`
+        //Authorization: `token ${token}`
+      }
+    }
+  ).then(res => res.json())
 }
+
 
 function getIssues() {
   //once an issue is submitted, fetch all open issues to see the issues you are creating
+  //const repo = 'js-ajax-fetch-lab';
+
+  fetch(`${baseURL}/repos/${user}/js-ajax-fetch-lab/issues`,
+    {
+      // GET below is not necessary
+      // We need when we use other methods like POST, DELETE...
+      method: 'GET',
+      headers: {
+        Authorization: `token ${getToken()}`
+        //Authorization: `token ${token}`
+        }
+    }
+  )
+   .then(res => res.json())
+   .then(json => displayIssues(json))
 }
+
+function displayIssues(json) {
+  console.log(typeof(json))
+  console.log(Object.values(json))
+  const div = document.getElementById('issues');
+  div.innerHTML = (Object.values(json).map(j => `<ul><li>${j.title}</li></ul>`).join(''))
+
+  //Can't 'map' json (object {}), neeed to map array
+  //Object.values returns an array. So the code below does not work
+  // issueDiv.innerHTML = (json.map(j => `<ul><li>${j.title}</li></ul>`).join(''))
+ }
